@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+SERVER_URL=${1:-127.0.0.1}
+
+echo "======================================="
+echo "Testing HTTP 1.0 Blocking (Return 426)"
+echo "HTTP 1.0"
+curl -0 "http://${SERVER_URL}/"
+echo "======================================="
+echo
+
+echo "======================================="
+echo "Testing HTTP 1.1 Allowed (Return 200)"
+echo "======================================="
+echo "HTTP 1.1"
+curl "http://${SERVER_URL}/"
+echo "======================================="
+echo
+
+echo "======================================="
+echo "Testing Strict Location - HTTP 1.1 Blocked"
+echo "======================================="
+echo "HTTP 1.1"
+curl "http://${SERVER_URL}/strict"
+echo "======================================="
+echo
+
+echo "======================================="
+echo "Testing Legacy Location - HTTP 1.0 Allowed"
+echo "======================================="
+echo "HTTP 1.0"
+curl -0 "http://${SERVER_URL}/legacy"
+echo "======================================="
+echo
+
+echo "======================================="
+echo "Testing No HTTP 1.0 Block and 1.1 Allowed"
+echo "======================================="
+echo "HTTP 1.0"
+curl -0 "http://${SERVER_URL}/no-http10"
+echo
+echo "HTTP 1.1"
+curl "http://${SERVER_URL}/no-http10"
+echo "======================================="
+echo
